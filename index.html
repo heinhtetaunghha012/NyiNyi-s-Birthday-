@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Birthday Postcard</title>
+    <style>
+    
+    :root {
+        --glass: rgba(0,0,0,0.1);
+        --glass-strong: rgba(255,255,255,0.55);
+        --border: rgba(0,0,0,0.2);
+        --shadow: rgba(0,0,0,0.6);
+    }
+    
+        /* CSS ပိုင်း - 3D Effect နှင့် အလှဆင်ခြင်း */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffebee, #f3e5f5); /* gradients background */
+            margin: 0;
+            font-family: 'Pyidaungsu', 'Segoe UI', sans-serif;
+            overflow: hidden;
+            color: #333;
+        }
+
+        /* 3D Container */
+        .card-container {
+          z-index: 1009;
+            width: 380px;
+            height: 500px;
+            perspective: 1500px; /* 3D အနက်အမြင်ရစေရန် */
+        }
+
+        .birthday-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* natural flip animation */
+            cursor: pointer;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); /* shadow အလန်းစား */
+            border-radius: 20px;
+        }
+
+        /* Mouse တင်လိုက်ရင် သို့မဟုတ် ဖုန်းမှာ နှိပ်လိုက်ရင် လှန်မယ် */
+        .birthday-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            backface-visibility: hidden; /* အနောက်ဘက်မှာရှိတဲ့မျက်နှာကို ဝှက်ထားမယ် */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* ကတ်အဖုံး (Pro Look) */
+        .front {
+            background-color: #9c27b0; /* ပိုရင့်ပြီး Pro ဆန်တဲ့ ခရမ်းရောင် */
+            color: white;
+            z-index: 2;
+            padding: 20px;
+        }
+
+        .profile-pic-container {
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            border: 8px solid rgba(255,255,255,0.7);
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .front h2 {
+            font-size: 32px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            font-weight: 700;
+        }
+
+        .hint {
+            position: absolute;
+            bottom: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* ကတ်အတွင်းပိုင်း (Clean & Modern Look) */
+        .back {
+            background-color: white;
+            color: #333;
+            transform: rotateY(180deg); /* ကတ်ကို လှန်ထားသလိုဖြစ်အောင် */
+            padding: 40px;
+            text-align: center;
+            z-index: 1;
+            
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(40px);
+
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.25);
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+        }
+
+        .back h1 {
+            color: #7b1fa2;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .message {
+            color: #616161;
+            line-height: 1.8;
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+
+        .cake-emoji {
+            font-size: 65px;
+        }
+
+        /* Confetti animation */
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            top: -10px;
+            opacity: 0.7;
+            border-radius: 2px;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container">
+        <div class="birthday-card" id="card">
+            <div class="front">
+                <div class="profile-pic-container">
+                    <img src="https://via.placeholder.com/190/eeeeee/616161?text=Photo+Here" class="profile-pic" alt="Friend">
+                </div>
+                <h2>Happy Birthday!</h2>
+                <p class="hint">🎁 Click The Card 🎁</p>
+            </div>
+            
+            <div class="back">
+                <h1>HAPPY BIRTHDAY BDO</h1>
+                <p class="message">
+                     <br><br>
+                       <br>
+                      <br> 
+                      <br>
+                    
+                </p>
+                <div class="cake-emoji">🎂</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const card = document.getElementById('card');
+
+        // နှိပ်လိုက်ရင် လှန်ဖို့
+        card.addEventListener('click', () => {
+            card.classList.toggle('flipped');
+        });
+
+        // စက္ကူပန်းကြဲတဲ့ function
+        function createConfetti() {
+            const colors = ['#e91e63', '#9c27b0', '#f44336', '#ffeb3b', '#2196f3', '#4caf50'];
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = - Math.random() * 10 - 10 + 'px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationName = 'fall';
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's'; // random speed
+            confetti.style.animationTimingFunction = 'linear';
+            confetti.style.animationIterationCount = 'infinite';
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove();
+            }, 6000); // clear after 6s
+        }
+
+        // စက္ကူပန်း ၁၀ ခုအရင်ကြဲမယ်၊ ပြီးရင် ဆက်ကြဲမယ်
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createConfetti, i * 200);
+        }
+        setInterval(createConfetti, 300);
+    </script>
+
+</body>
+</html>
